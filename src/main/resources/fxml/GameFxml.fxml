@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane fx:id="gameBorder" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.beadando.kartyajatek.controller.GameFXMLController">
+   <center>
+      <GridPane prefHeight="435.0" prefWidth="907.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="606.0" minWidth="10.0" prefWidth="197.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="710.0" minWidth="0.0" prefWidth="710.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="154.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="159.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="161.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox fx:id="hboxPcCard" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></HBox>
+            <HBox fx:id="hboxPlayerCard" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Játékos: " textFill="WHITE" />
+                  <Label fx:id="labelPlayerPoint" prefHeight="16.0" prefWidth="140.0" text="   " textFill="WHITE" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Osztó: " textFill="WHITE" />
+                  <Label fx:id="labelOsztoPoint" prefHeight="16.0" prefWidth="144.0" text="      " textFill="WHITE" />
+               </children>
+            </HBox>
+            <Label fx:id="labelInfo" prefHeight="87.0" prefWidth="292.0" text="   " textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </center>
+   <bottom>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="129.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="555.0" minWidth="10.0" prefWidth="316.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="429.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Név" textFill="#cdc9c9" wrapText="true" />
+            <Button fx:id="btnHit" mnemonicParsing="false" onAction="#btnLapOnAction" prefHeight="26.0" prefWidth="92.0" text="   Lapot   " GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="btnTet" mnemonicParsing="false" onAction="#btnTetOnAction" text="   Tét    ">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Button>
+                  <TextField fx:id="textFieldTet" prefHeight="26.0" prefWidth="160.0" />
+                  <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#btnAdminOnAction" text="Felhasználók" />
+               </children>
+            </HBox>
+            <Label text="Egyenleg" textFill="#cfcfcf" GridPane.rowIndex="1" />
+            <GridPane GridPane.columnIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="labelTet" alignment="TOP_LEFT" contentDisplay="TOP" text="     " textFill="#cdc9c9" GridPane.columnIndex="1" />
+                  <Label fx:id="labelName" prefHeight="16.0" prefWidth="130.0" text="   " textFill="#fcfcfc" />
+               </children>
+            </GridPane>
+            <GridPane GridPane.columnIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="btnStand" mnemonicParsing="false" onAction="#btnTartOnAction" prefHeight="26.0" prefWidth="89.0" text="   Tart   " />
+                  <Button fx:id="btnNewRound" mnemonicParsing="false" onAction="#btnNewRoundOnAction" text="Új kör" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="labelBalance" prefHeight="16.0" prefWidth="99.0" text="   " textFill="#cfcfcf" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </bottom>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Előzmények">
+               <items>
+                  <MenuItem fx:id="btnHistory" mnemonicParsing="false" onAction="#btnHistoryOnAction" text="Előzmények" />
+               </items></Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>
