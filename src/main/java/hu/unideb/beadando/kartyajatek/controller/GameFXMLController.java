@@ -166,6 +166,7 @@ public class GameFXMLController implements Initializable {
 
         btnHit.setDisable(false);
         
+        
         startState();
 
     }
@@ -199,7 +200,8 @@ public class GameFXMLController implements Initializable {
         
         btnStand.setDisable(true);
         btnHit.setDisable(true);
-        btnNewRound.setDisable(false);
+        btnNewRound.setDisable(true);
+        btnTet.setDisable(false);
         
         setLabelBalance(gameManager.getGameModel().getPlayer().getBalance());
         
@@ -209,8 +211,10 @@ public class GameFXMLController implements Initializable {
 
     @FXML
     void btnTetOnAction(ActionEvent event) {
+    
         
-     
+        
+        
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Hiba");
         alert.setHeaderText(null);
@@ -224,7 +228,17 @@ public class GameFXMLController implements Initializable {
                 alert.show();
 
             } else {
+                
+                setLabelInfo("");
+                    
+                gameManager.clearHands();
+                hboxPcCard.getChildren().clear();
+                hboxPlayerCard.getChildren().clear();
 
+                cardsPc.clear();
+                cardsPlayer.clear();
+                
+                
                 labelTet.setText(textFieldTet.getText());
                 gameManager.setTet(Integer.valueOf(textFieldTet.getText()));
 
@@ -286,6 +300,7 @@ public class GameFXMLController implements Initializable {
         btnStand.setDisable(true);
         btnHit.setDisable(true);
         btnNewRound.setDisable(true);
+        
 
         setLabelPlayer(gameModel.getPlayer().getNickname());
         
