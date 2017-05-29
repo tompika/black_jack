@@ -10,11 +10,10 @@ public class Player {
     private String password;
 
     private int balance;
-    private List<Card> cards;
-    private int numCardsInHand;
+    private List<Card> cards = new ArrayList<>();
+    
 
     public Player() {
-        this.numCardsInHand = 0;
     }
 
     public Player(String nickname, String password) {
@@ -26,8 +25,6 @@ public class Player {
         this.name = name;
         this.nickname = nickname;
         this.password = password;
-        this.cards = new ArrayList<>();
-        this.numCardsInHand = 0;
     }
 
     public String getName() {
@@ -65,6 +62,10 @@ public class Player {
     public List<Card> getCards() {
         return cards;
     }
+    
+    public void setCards(List<Card> list){
+        this.cards = list;
+    }
 
     
 
@@ -85,12 +86,16 @@ public class Player {
         }
         return true;
     }
-@Override
-    public String toString() {
-        return "Player{" + "name=" + name + ", nickname=" + nickname + ", password=" + password + ", balance=" + balance + ", cards=" + cards + ", numCardsInHand=" + numCardsInHand + '}';
-    }
+
     /*
 	public int getCardsPoint(){
 		return cards.stream().mapToInt(e ->e.getValue()).sum();
 	}*/
+
+    @Override
+    public String toString() {
+        return "Player{" + "name=" + name + ", nickname=" + nickname + ", password=" + password + ", balance=" + balance + ", cards=" + cards + '}';
+    }
+    
+    
 }

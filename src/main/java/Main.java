@@ -11,8 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- * Main osztály - A projekt belépési pontja, létrehozza a játékhoz tartozó
- * modell és fxml objektumokat.
+ * Main osztály - A projekt belépési pontja.
  *
  * @author Szilvácsku Péter
  *
@@ -31,11 +30,12 @@ public class Main extends Application {
         @SuppressWarnings("unused")
         Controller cont = Controller.getInstance();
        
-        logger.info("Controller loaded");
+        logger.info("Program start");
         cont.init();
+        
         launch(args);
 
-        logger.info("A program leallt.");
+        logger.info("Program shutdown");
 
     }
 
@@ -72,7 +72,7 @@ public class Main extends Application {
 
     @Override
     public void stop() {
-        logger.info("A gui leallt");
+        logger.info("GUI Stop");
     }
 
 }

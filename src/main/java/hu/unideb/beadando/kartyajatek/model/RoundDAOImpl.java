@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 import javafx.collections.FXCollections;
@@ -51,7 +53,7 @@ public class RoundDAOImpl implements RoundDAO{
     
    
     @Override
-    public void addRound(Round _round) {
+    public void addRound(String _nickName, List<Card> playerCards, List<Card> osztoCards) {
         
         
         DateFormat dateFormatInTable = new SimpleDateFormat("yyyy. MM. dd. HH:mm:ss");;
@@ -78,8 +80,8 @@ public class RoundDAOImpl implements RoundDAO{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
 
-        if (!_round.playerProperty().toString().isEmpty() 
-                && !_round.osztoProperty().toString().isEmpty() && !saveFile.exists()) {
+        if (!playerCards.isEmpty() 
+                && !osztoCards.isEmpty() && !saveFile.exists()) {
             logger.info("A kimeneti fajl nem letezik. - Letrehozva!\n - " + saveFile.getPath());
             try {
 
@@ -93,15 +95,15 @@ public class RoundDAOImpl implements RoundDAO{
                 rootElement.appendChild(round);
 
                 Element name = doc.createElement("name");
-                name.appendChild(doc.createTextNode(_round.nameProperty().toString()));
+                name.appendChild(doc.createTextNode(_nickName));
                 round.appendChild(name);
 
                 Element playerCard = doc.createElement("playercard");
-                playerCard.appendChild(doc.createTextNode(_round.playerProperty().toString()));
+                playerCard.appendChild(doc.createTextNode(cardsToString(playerCards)));
                 round.appendChild(playerCard);
 
                 Element pcCard = doc.createElement("pccard");
-                pcCard.appendChild(doc.createTextNode(_round.osztoProperty().toString()));
+                pcCard.appendChild(doc.createTextNode(cardsToString(osztoCards)));
                 round.appendChild(pcCard);
 
                 Element datum = doc.createElement("datum");
@@ -137,17 +139,17 @@ public class RoundDAOImpl implements RoundDAO{
                 Element round = doc.createElement("round");
 
                 Element name = doc.createElement("name");
-                name.appendChild(doc.createTextNode(_round.nameProperty().toString()));
+                name.appendChild(doc.createTextNode(_nickName));
                 round.appendChild(name);
 
                 Element playerCard = doc.createElement("playercard");
-                playerCard.appendChild(doc.createTextNode(_round.playerProperty().toString()));
+                playerCard.appendChild(doc.createTextNode(cardsToString(playerCards)));
                 round.appendChild(playerCard);
 
                 Element pcCard = doc.createElement("pccard");
-                pcCard.appendChild(doc.createTextNode(_round.osztoProperty().toString()));
+                pcCard.appendChild(doc.createTextNode(cardsToString(osztoCards)));
                 round.appendChild(pcCard);
-                round.appendChild(pcCard);
+                
 
                 Element datum = doc.createElement("datum");
                 datum.appendChild(doc.createTextNode(dateInTable));
@@ -231,5 +233,24 @@ public class RoundDAOImpl implements RoundDAO{
             logger.warn(RoundDAOImpl.class.getName() + ex);
         }
         return roundData;
+    }
+    
+    private String cardsToString(List<Card> list) {
+        
+        removeBackCard(list);
+
+        
+        String res = "[";
+        res = list.stream().map((card) -> card + " ").reduce(res, String::concat);
+        res += "]";
+        return res;
+    }
+    
+    private void removeBackCard(List<Card> list){
+        
+        list = list.stream()
+                .filter(e -> e.getValue() != 0)
+                .collect(Collectors.toList());
+        
     }
 }

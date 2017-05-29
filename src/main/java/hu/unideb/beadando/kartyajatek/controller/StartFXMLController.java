@@ -102,7 +102,11 @@ public class StartFXMLController implements Initializable {
             // Traditional way to get the response value.
             Optional<String> result = dialog.showAndWait();
             if (result.isPresent()) {
-
+                controller.getManager().setPackOfCardsCount(Integer.valueOf(result.get()));
+                logger.info("Paklik szama beallitva: " + result.get());
+            }
+            else{
+                logger.info("Paklik szama beallitva: 1");
             }
 
            
@@ -133,12 +137,6 @@ public class StartFXMLController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-       
-        //PlayerDAOImpl teszt = new PlayerDAOImpl();
-        
-        //Player player = new Player("s", "s");
-        //teszt.removePlayer(player);
-
     }
 
     public void setNickNameField(String value) {

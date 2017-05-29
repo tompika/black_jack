@@ -23,7 +23,7 @@ public class GameModel {
 
     
     public GameModel(){
-        
+        this.oszto = new Oszto();
     }
     
     public void setPlayer(Player player){
@@ -55,102 +55,5 @@ public class GameModel {
 
     }
 
- /*
-    private void checkWinner(List<Card> cardsPlayer, List<Card> cardsPc) {
-
-        
-        String nyertes = "";
-        
-        int player = cardsPlayer.stream()
-                .mapToInt(e -> e.getValue())
-                .sum();
-
-        int pc = cardsPc.stream()
-                .mapToInt(e -> e.getValue())
-                .sum();
-
-        int playerAce = player;
-        int pcAce = pc;
-
-        int ace = (int) cardsPlayer.stream()
-                .filter(e -> e.isAce())
-                .count();
-
-        int acePc = (int) cardsPc.stream()
-                .filter(e -> e.isAce())
-                .count();
-
-        if (ace > 0) {
-            playerAce += 11;
-        }
-        if (acePc > 0) {
-            pcAce += 11;
-        }
-
-        if (pc == player) {
-            logger.info("Dontetlen!");
-            cont.calculateEgyenleg(0);
-            nyertes = "Dontetlen!";
-        }
-        
-         else if (pc <= 21 && player <= 21) {
-            if ( (21 - player < 21 - pc ) || (21-playerAce < 21 - pcAce) ) {
-                logger.info("Nyertes jatekos: " + getPlayerName());
-                calculateEgyenleg(1);
-                nyertes = getPlayerName();
-            }
-            else if ( (21 - player > 21 - pc ) || (21 - playerAce > 21 - pcAce) ){
-                logger.info("Nyertes jatekos: " + "Oszto");
-                calculateEgyenleg(-1);
-                nyertes = "Oszto";
-            }
-        }
-       
-        
-        else if (pc > 21 && player <= 21) {
-            logger.info("Nyertes jatekos: " + getPlayerName());
-            calculateEgyenleg(1);
-            nyertes = getPlayerName();
-         
-        }
-
-        else if (player > 21 && pc <= 21) {
-            logger.info("Nyertes jatekos: OSZTO");
-            calculateEgyenleg(-1);
-            nyertes = "Oszto";
-   
-
-        }
-        
-        
-                
-        if (nyertes.equals("Dontetlen"))
-        {
-            labelInfo.setText("Senki sem nyert!");
-            
-            labelEgyenleg.setText(String.valueOf(cont.getEgyenleg()));
-            
-            tart.setDisable(true);
-            lap.setDisable(true);
-            buttonTet.setDisable(true);
-            buttonUjKor.setDisable(false);
-            
-            cont.roundToFile(cardsPlayer, cardsPc);
-        }
-         else if (!nyertes.isEmpty()) {
-            labelInfo.setText("Nyertes: " + nyertes);
-            
-            labelEgyenleg.setText(String.valueOf(cont.getEgyenleg()));
-                       
-            tart.setDisable(true);
-            lap.setDisable(true);
-            buttonTet.setDisable(true);
-            buttonUjKor.setDisable(false);
-            
-            cont.roundToFile(cardsPlayer, cardsPc);
-
-        }
-
-*/
 
 }

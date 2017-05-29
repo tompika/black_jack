@@ -6,6 +6,7 @@
 package hu.unideb.beadando.kartyajatek.model;
 
 
+import java.util.List;
 import javafx.collections.ObservableList;
 
 /**
@@ -14,7 +15,7 @@ import javafx.collections.ObservableList;
  */
 public interface RoundDAO {
     
-    public void addRound(Round round);
+    public void addRound(String nickName, List<Card> playerCards, List<Card> osztoCards);
     public ObservableList<Round> getAllRound();
     
 }

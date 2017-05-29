@@ -10,7 +10,6 @@ import hu.unideb.beadando.kartyajatek.model.GameModel;
 import hu.unideb.beadando.kartyajatek.model.Oszto;
 import hu.unideb.beadando.kartyajatek.model.Player;
 import hu.unideb.beadando.kartyajatek.model.RoundDAOImpl;
-import hu.unideb.beadando.kartyajatek.model.Round;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,9 +35,11 @@ public class GameManagerImpl implements GameManager {
     private static final Logger logger = LogManager.getLogger(GameManagerImpl.class);
 
     private GameModel gameModel;
+    private int packOfCardsCount;
 
     public GameManagerImpl() {
         this.gameModel = new GameModel();
+        this.packOfCardsCount = 1;
     }
 
     public GameModel getGameModel() {
@@ -46,7 +47,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void loadCard(int packOfCardsCount) {
+    public void loadCard() {
 
         List<Card> packCards = new ArrayList<>();
 
@@ -265,18 +266,16 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void calculatePoint() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public String getWinnerName() {
 
-    @Override
-    public String getWinnerName(Player _player, Oszto _oszto) {
-
+        Player _player = gameModel.getPlayer();
+        Oszto _oszto = gameModel.getOszto();
+        
         List<Card> playerCards = _player.getCards();
         List<Card> osztoCards = _oszto.getCards();
 
         String playerNickName = _player.getNickname();
-        String osztoName = _oszto.getName();
+        
 
         String nyertes = "";
 
@@ -308,35 +307,36 @@ public class GameManagerImpl implements GameManager {
 
         if (oszto == player) {
             logger.info("Dontetlen!");
-            //cont.calculateEgyenleg(0);
+            
             nyertes = "Dontetlen!";
         } else if (oszto <= 21 && player <= 21) {
             if ((21 - player < 21 - oszto) || (21 - playerAce < 21 - osztoAce)) {
                 logger.info("Nyertes jatekos: " + playerNickName);
-                //calculateEgyenleg(1);
-                nyertes = playerNickName;
+                playerWin();
+                nyertes = "Nyertes jatekos: " + playerNickName;
             } else if ((21 - player > 21 - oszto) || (21 - playerAce > 21 - osztoAce)) {
-                logger.info("Nyertes jatekos: " + "Oszto");
-                //calculateEgyenleg(-1);
-                nyertes = "Oszto";
+                logger.info("Vesztettel!");
+                playerLos();
+                nyertes = "Vesztettel!";
             }
         } else if (oszto > 21 && player <= 21) {
             logger.info("Nyertes jatekos: " + playerNickName);
-            //calculateEgyenleg(1);
-            nyertes = playerNickName;
+            playerWin();
+            nyertes = "Nyertes jatekos: " + playerNickName;
 
         } else if (player > 21 && oszto <= 21) {
-            logger.info("Nyertes jatekos: " + osztoName);
-            //calculateEgyenleg(-1);
-            nyertes = osztoName;
+            logger.info("Vesztettel!");
+            playerLos();
+            nyertes = "Vesztettel!";
 
         }
 
+        clearHands();
         return nyertes;
 
     }
 
-    public String calculatePoint(List<Card> list) {
+    public String printCardsValue(List<Card> list) {
 
         int num = 0;
         boolean ace = false;
@@ -352,21 +352,72 @@ public class GameManagerImpl implements GameManager {
 
     }
 
-    public void roundToFile(Round _round) {
+    public void roundToFile(String nickName, List<Card> playerCards, List<Card> osztoCards) {
 
         RoundDAOImpl roundimpl = new RoundDAOImpl();
 
-        roundimpl.addRound(_round);
+        roundimpl.addRound(nickName, playerCards, osztoCards);
 
-        logger.info("Az adott kor kiirasra kerul!");
+        logger.info("Az adott kor kiirasra kerult!");
 
     }
 
-    private String cardsToString(List<Card> list) {
-        String res = "[";
-        res = list.stream().map((card) -> card + " ").reduce(res, String::concat);
-        res += "]";
-        return res;
+       
+    public void setTet(int value){
+        gameModel.setTet(value);
+        logger.info("Tet beallitva: " + value);
     }
 
+    public void setPackOfCardsCount(int value){
+        this.packOfCardsCount = value;
+    }
+            
+            
+    public void setCardPlayerHand(List<Card> card){
+        gameModel.getPlayer().setCards(card);
+    }
+    
+    public void setCardOsztoHand(List<Card> card){
+        gameModel.getOszto().setCards(card);
+    }
+    
+    public void clearHands(){
+        gameModel.getPlayer().getCards().clear();
+        gameModel.getOszto().getCards().clear();
+        
+        logger.info("Kartyak eldodva!");
+    }
+    
+    public void setPlayerBalance(int value){
+        gameModel.getPlayer().setBalance(value);
+    }
+    
+    public int playerWin(){
+       
+       int actualBalance = gameModel.getPlayer().getBalance();
+       int actualTet = gameModel.getTet();
+       
+       
+       gameModel.getPlayer().setBalance(actualBalance + actualTet);
+       
+       int newBalance = gameModel.getPlayer().getBalance();
+       logger.info("A jatekos nyert! - " + newBalance + " = " + actualBalance + " + "+ actualTet );
+       
+       return newBalance;
+    }
+    
+    public int playerLos(){
+       
+       int actualBalance = gameModel.getPlayer().getBalance();
+       int actualTet = gameModel.getTet();
+       
+       
+       gameModel.getPlayer().setBalance(actualBalance - actualTet);
+       
+       int newBalance = gameModel.getPlayer().getBalance();
+       logger.info("A jatekos vesztett! - " + newBalance + " = " + actualBalance + " - "+ actualTet );
+       
+       return newBalance;
+    }
+    
 }

@@ -142,13 +142,16 @@ public class PlayerDAOImpl implements PlayerDAO{
                 // new File("target/" + datee + ".xml"));
 
                 transformer.transform(source, result);
+                
+                logger.info("Uj jatekos neve: " + player.getNickname() );
 
             } catch (SAXException | IOException | ParserConfigurationException | TransformerException e) {
                 logger.warn(e.getStackTrace().toString());
             }
 
         }
-        logger.info("Kimeneti fajl: " + saveFile.getPath());
+        logger.info("Jatekosok adatai: " + saveFile.getPath());
+        
                 
     }
 
@@ -275,7 +278,7 @@ public class PlayerDAOImpl implements PlayerDAO{
         } catch (SAXException | IOException | ParserConfigurationException ex) {
             logger.info(Data.class.getName());
         }
-        logger.warn("Nem talaltunk ilyen felhasznalot!");
+        logger.warn("Nem talaltunk ilyen felhasznalot! ( " + _nickName + " )");
         return null;
     }
 

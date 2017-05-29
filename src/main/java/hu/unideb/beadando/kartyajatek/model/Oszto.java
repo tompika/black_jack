@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Oszto {
 
-	private final List<Card> cards;
-	private final String name;
+	private List<Card> cards =  new ArrayList<>();
+	private String name;
 
 	
 	public Oszto(){
-		this.cards = new ArrayList<>();
 		this.name = "Oszto";
+           
 	}
 
 	
@@ -23,5 +23,8 @@ public class Oszto {
             return name;
         }
 	
+        public void setCards(List<Card> list){
+            this.cards = list;
+        }
 	
 }
